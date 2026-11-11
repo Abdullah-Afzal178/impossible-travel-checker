@@ -1,0 +1,105 @@
+@import "tailwindcss";
+
+/*
+ * Flight tracker: pale sky paper, deep navy ink, a dotted world in soft blue
+ * and a coral route line. Rounded cards like boarding passes.
+ */
+@theme inline {
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-azeret-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
+@theme {
+  --color-sky: #eef5fc;
+  --color-sea: #e2eef9;
+  --color-dot: #b3c9e3;
+  --color-card: #ffffff;
+  --color-navy: #0e2240;
+  --color-navy-soft: #1b3560;
+  --color-slate: #4b5f7c;
+  --color-line: #cddcec;
+  --color-coral: #f0603a;
+  --color-coral-dark: #c4421f;
+  --color-coral-soft: #fde6de;
+  --color-ok: #17805a;
+  --color-ok-soft: #dcf2e8;
+  --color-warn: #a86a00;
+  --color-warn-soft: #fbefd5;
+  --color-bad: #c7302c;
+  --color-bad-soft: #fbe1df;
+  --color-board: #0e2240;
+  --color-amber: #ffc860;
+}
+
+:root {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--color-sky);
+  color: var(--color-navy);
+  -webkit-font-smoothing: antialiased;
+}
+
+/*
+ * Base resets belong in @layer base. An unlayered `a { color }` or
+ * `button { font }` outranks every Tailwind utility and silently kills text
+ * colours on links and font sizes on controls.
+ */
+@layer base {
+  a {
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--color-coral);
+    color: #fff;
+  }
+}
+
+/* The route draws itself from A to B once. */
+@keyframes route-draw {
+  from {
+    stroke-dashoffset: 1;
+  }
+
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.route-draw {
+  stroke-dasharray: 1;
+  animation: route-draw 1.6s cubic-bezier(0.45, 0, 0.2, 1) 0.2s both;
+}
+
+@keyframes pin-pulse {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+
+  to {
+    transform: scale(2.6);
+    opacity: 0;
+  }
+}
+
+.pin-pulse {
+  animation: pin-pulse 2.2s ease-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-draw,
+  .pin-pulse {
+    animation: none;
+  }
+}
+
+/* The perforation between the two halves of the boarding pass. */
+.perforation {
+  background-image: radial-gradient(circle, var(--color-line) 1.5px, transparent 1.6px);
+  background-size: 10px 10px;
+}
